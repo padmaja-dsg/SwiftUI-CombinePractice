@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject private var viewModel = CoinListViewModel()
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            List(viewModel.coinViewModels) { coinViewModel in
+                Text(coinViewModel.displayText)
+            }.onAppear {
+                self.viewModel.fetchCoins()
+            }
+            .navigationBarTitle("Coins")
+        }
     }
 }
 
